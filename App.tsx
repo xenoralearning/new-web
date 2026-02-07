@@ -12,9 +12,13 @@ import TeachersPage from './components/TeachersPage';
 import ParentsPage from './components/ParentsPage';
 import TeamPage from './components/TeamPage';
 import LanguageSwitcher from './components/LanguageSwitcher';
+import TopRibbon from './components/TopRibbon';
+import MovingRibbon from './components/MovingRibbon';
+import BottomRibbon from './components/BottomRibbon';
+import AIQuizPage from './components/AIQuizPage';
 import { LanguageProvider, useLanguage } from './LanguageContext';
 
-type ViewState = 'home' | 'kids' | 'teachers' | 'parents' | 'team';
+type ViewState = 'home' | 'kids' | 'teachers' | 'parents' | 'team' | 'aiquiz';
 
 const MainApp: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(true);
@@ -108,6 +112,7 @@ const MainApp: React.FC = () => {
       case 'teachers': return <TeachersPage />;
       case 'parents': return <ParentsPage />;
       case 'team': return <TeamPage />;
+      case 'aiquiz': return <AIQuizPage />;
       default:
         return (
           <>
@@ -123,9 +128,12 @@ const MainApp: React.FC = () => {
   return (
     <div className={`min-h-screen font-sans selection:bg-cyan-500 selection:text-white`}>
       <Background />
+
+      {/* Premium top ribbon anchor */}
+      <TopRibbon />
       
-      {/* Sticky Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between bg-white/70 dark:bg-xenora-900/70 backdrop-blur-md border-b border-slate-200 dark:border-white/5 transition-all duration-300 hover:bg-white/90 dark:hover:bg-xenora-900/90 min-h-[60px] sm:min-h-[70px]">
+      {/* Sticky Header - offset to accommodate top ribbon */}
+      <header className="fixed top-[2.25rem] left-0 right-0 z-50 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between bg-white/70 dark:bg-xenora-900/70 backdrop-blur-md border-b border-slate-200 dark:border-white/5 transition-all duration-300 hover:bg-white/90 dark:hover:bg-xenora-900/90 min-h-[60px] sm:min-h-[70px]">
         <div onClick={() => handleNavigate('home')} className="cursor-pointer flex-shrink-0">
            <Logo darkMode={darkMode} />
         </div>
@@ -138,6 +146,7 @@ const MainApp: React.FC = () => {
               <NavButton target="kids" label={content.nav.kids} />
               <NavButton target="teachers" label={content.nav.teachers} />
               <NavButton target="parents" label={content.nav.parents} />
+              <NavButton target="aiquiz" label="Quiz" />
               <NavButton target="team" label={content.nav.team} />
             </nav>
             <div className="flex items-center gap-4">
@@ -171,12 +180,12 @@ const MainApp: React.FC = () => {
         <>
           {/* Backdrop overlay for clicking outside */}
           <div 
-            className="md:hidden fixed inset-0 top-[60px] sm:top-[70px] z-40 bg-black/30 backdrop-blur-sm"
+            className="md:hidden fixed inset-0 top-[calc(2.25rem+60px)] sm:top-[calc(2.25rem+70px)] z-40 bg-black/30 backdrop-blur-sm"
             onClick={() => setIsMenuOpen(false)}
             aria-hidden="true"
           />
-          {/* Mobile Menu */}
-          <nav className="md:hidden fixed top-[60px] sm:top-[70px] left-0 right-0 z-40 bg-white/95 dark:bg-xenora-900/95 backdrop-blur-md border-b border-slate-200 dark:border-white/5 animate-in fade-in slide-in-from-top-2 duration-300">
+          {/* Mobile Menu - offset below top ribbon + header */}
+          <nav className="md:hidden fixed top-[calc(2.25rem+60px)] sm:top-[calc(2.25rem+70px)] left-0 right-0 z-40 bg-white/95 dark:bg-xenora-900/95 backdrop-blur-md border-b border-slate-200 dark:border-white/5 animate-in fade-in slide-in-from-top-2 duration-300">
             <div className="flex flex-col items-stretch gap-0 py-3 px-4 sm:px-6">
               {/* Navigation Items - Touch friendly (48px min height) */}
               <button
@@ -229,6 +238,16 @@ const MainApp: React.FC = () => {
               >
                 {content.nav.team}
               </button>
+              <button
+                onClick={() => handleNavigate('aiquiz')}
+                className={`py-4 px-4 text-center font-semibold uppercase text-base tracking-wide rounded-lg transition-all duration-200 ${
+                  view === 'aiquiz'
+                    ? 'bg-blue-500/10 text-blue-600 dark:text-cyan-400 border border-blue-500/30'
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/5'
+                }`}
+              >
+                Quiz
+              </button>
               
               {/* Divider */}
               <div className="h-px bg-slate-200 dark:bg-white/10 my-3" />
@@ -253,13 +272,19 @@ const MainApp: React.FC = () => {
         </>
       )}
 
-      <main className="relative min-h-screen pt-[60px] sm:pt-[70px]">
+      <MovingRibbon />
+
+      {/* Main content with top + header spacing + bottom ribbon spacing */}
+      <main className="relative min-h-screen pt-[calc(2.25rem+60px)] sm:pt-[calc(2.25rem+70px)] pb-[2.25rem]">
         {/* Page Transition Wrapper */}
         <div key={view} className="page-enter">
             {renderContent()}
         </div>
       </main>
 
+
+      {/* Premium bottom ribbon anchor */}
+      <BottomRibbon />
       <Footer />
     </div>
   );

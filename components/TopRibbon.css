@@ -1,0 +1,98 @@
+/* TopRibbon: Premium top viewport anchor with left→right scroll */
+
+.top-ribbon {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    #0a0e27 0%,
+    rgba(15, 23, 42, 0.95) 50%,
+    #0a0e27 100%
+  );
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  z-index: 40;
+  /* Subtle backdrop for premium feel */
+  backdrop-filter: blur(8px);
+}
+
+.top-ribbon__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  /* Scrolls LEFT → RIGHT (opposite of bottom) */
+  animation: top-ribbon-scroll 28s linear infinite;
+}
+
+.top-ribbon__group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: max-content;
+  gap: clamp(1.4rem, 3.2vw, 2.8rem);
+  padding-right: clamp(1.4rem, 3.2vw, 2.8rem);
+}
+
+.top-ribbon__item {
+  white-space: nowrap;
+  font: inherit;
+  font-size: clamp(0.70rem, 0.60rem + 0.35vw, 0.85rem);
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  color: rgba(248, 250, 252, 0.92);
+  opacity: 0.95;
+  /* Subtle cyan glow for AI tech feel */
+  text-shadow: 0 0 6px rgba(34, 211, 238, 0.12);
+  transition: opacity 0.3s ease;
+}
+
+/* Smooth scroll animation: moves LEFT → RIGHT (seamless loop with 3 groups) */
+@keyframes top-ribbon-scroll {
+  from {
+    transform: translate3d(-33.333%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Responsive: Adjust height on smaller screens */
+@media (max-width: 640px) {
+  .top-ribbon {
+    height: 2rem;
+  }
+
+  .top-ribbon__item {
+    font-size: 0.65rem;
+  }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .top-ribbon__track {
+    animation-duration: 50s;
+  }
+}
+
+/* Smooth fade-in on page load */
+@keyframes ribbon-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.top-ribbon {
+  animation: ribbon-fade-in 0.6s ease-out 0.2s backwards;
+}

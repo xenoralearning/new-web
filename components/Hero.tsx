@@ -37,6 +37,12 @@ const Hero: React.FC = () => {
               <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
                 {content.hero.description}
               </p>
+              
+              {/* Subtle accent line - premium visual touch */}
+              <div className="pt-2 flex items-center gap-3">
+                <div className="h-px flex-1 bg-gradient-to-r from-cyan-500/40 to-transparent"></div>
+                <div className="w-2 h-2 rounded-full bg-cyan-400/60"></div>
+              </div>
             </div>
           </Reveal>
 
@@ -92,6 +98,9 @@ const Hero: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Subtle bottom separator - elegant visual anchor */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent"></div>
     </section>
   );
 };

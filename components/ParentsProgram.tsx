@@ -13,6 +13,9 @@ const ParentsProgram: React.FC = () => {
 
   return (
     <section id="parents" className="relative py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-12 z-10 bg-slate-100 dark:bg-xenora-800/50 w-full">
+      {/* Subtle top accent line - premium visual anchor */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent"></div>
+      
       <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-24 items-center">
         
         {/* Content (~62%) */}

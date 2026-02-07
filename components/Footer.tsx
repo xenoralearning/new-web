@@ -49,6 +49,9 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="relative bg-white dark:bg-black border-t border-slate-200 dark:border-white/10 pt-12 sm:pt-16 lg:pt-20 pb-8 sm:pb-10 lg:pb-12 px-4 sm:px-6 lg:px-12 z-10 w-full">
+      {/* Subtle top accent line - premium visual anchor */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
+      
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16">
         
         <div>
